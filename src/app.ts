@@ -7,39 +7,11 @@ function showHello(divName: string, name: string) {
   elt.innerText = `Hello from ${name}`;
 }
 
-//----------------------------------
-
-enum Category { JavaScript, CSS, HTML, TypeScript, Angular }
-
-interface Person {
-  name: string;
-  email: string;
-}
-
-interface Author extends Person {
-  numBooksPublished: number;
-}
-
-interface Librarian extends Person {
-  department: string;
-  assistCustomer: (custName: string) => void;
-}
-
-interface DamageLogger {
-  (reason: string): void;
-}
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-  available: boolean;
-  category: Category;
-  pages?: number;
-  // markDamaged?: (reason: string) => void;
-  markDamaged?: DamageLogger;
-}
+//---------------------------------
 
 type BookProperties = keyof Book;
+type PersonBook = Person & Book;
+type BookOrUndefined = Book | undefined;
 
 function getAllBooks(): ReadonlyArray<Book> {
   const books: readonly Book[] = <const>[
@@ -100,7 +72,7 @@ function createCustomer(name: string, age?: number, city?: string): void {
   if (city) console.log(`Customer city: ${city}`);
 }
 
-function getBookByID(id: number): Book | undefined {
+function getBookByID(id: number): BookOrUndefined {
   const books = getAllBooks();
   return books.find(book => book.id === id);
 }
@@ -168,7 +140,7 @@ function getProperty(book: Book, prop: BookProperties): any {
   return book[prop];
 }
 
-class ReferenceItem {
+abstract class ReferenceItem {
   // title: string;
   // year: number;
 
@@ -191,7 +163,7 @@ class ReferenceItem {
     this._publisher = newPublisher;
   }
 
-  constructor(id: number, public title: string, private year: number) {
+  constructor(id: number, public title: string, protected year: number) {
     console.log('Creating a new ReferenceItem...');
     this.#id = id;
   }
@@ -203,6 +175,32 @@ class ReferenceItem {
   printItem(): void {
     console.log(`${this.title} was published ${this.year}`);
     console.log(ReferenceItem.department);
+  }
+
+  abstract printCitation(): void;
+}
+
+class Encyclopedia extends ReferenceItem {
+  constructor(id: number, title: string, year: number, public edition: number) {
+    super(id, title, year);
+  }
+  printItem(): void {
+    super.printItem();
+    console.log(`Edition: ${this.edition} (${this.year})`);
+  }
+
+  printCitation(): void {
+    console.log(`${this.title} - ${this.year}`);
+  }
+}
+
+class UniversityLibrarian implements Librarian {
+  name: string;
+  email: string;
+  department: string;
+
+  assistCustomer(custName: string): void {
+    console.log(`${this.name} is assisting ${custName}`);
   }
 }
 
@@ -296,16 +294,37 @@ class ReferenceItem {
 // console.log(getProperty(myBook, 'isbn'));
 
 // Task 05.01
-const ref: ReferenceItem = new ReferenceItem(1, 'TypeScript', 2021);
-ref.printItem();
-console.log(ref);
-ref.publisher = 'Publisher';
-console.log(ref.publisher);
-console.log(ref.getID());
+// const ref: ReferenceItem = new ReferenceItem(1, 'TypeScript', 2021);
+// ref.printItem();
+// console.log(ref);
+// ref.publisher = 'Publisher';
+// console.log(ref.publisher);
+// console.log(ref.getID());
 
+// Task 05.02
+// const refBook = new Encyclopedia(1, 'TypeScript', 2021, 3);
+// console.log(refBook);
+// refBook.printItem();
 
+// Task 05.03
+// const refBook = new Encyclopedia(1, 'TypeScript', 2021, 3);
+// console.log(refBook);
+// refBook.printCitation();
 
+// Task 05.04
+// const favoriteLibrarian: Librarian = new UniversityLibrarian();
+// favoriteLibrarian.name = 'Anna';
+// favoriteLibrarian.assistCustomer('Boris');
 
-
+// Task 05.05
+// const personBook: PersonBook = {
+//   id: 1,
+//   name: 'Anna',
+//   author: 'Anna',
+//   available: false,
+//   category: Category.CSS,
+//   email: 'anna@mail.com',
+//   title: 'CSS'
+// };
 
 
