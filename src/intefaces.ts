@@ -29,4 +29,9 @@ interface Book {
   markDamaged?: DamageLogger;
 }
 
-export { Book, DamageLogger as Logger, Person, Author, Librarian }
+interface Magazine {
+  title: string;
+  publisher: string;
+}
+
+export { Book, DamageLogger as Logger, Person, Author, Librarian, Magazine }
