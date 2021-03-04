@@ -1,4 +1,6 @@
-export default class Shelf<T> {
+import {ShelfItem} from './../intefaces';
+
+export default class Shelf<T extends ShelfItem> {
   private items: T[] = [];
 
   add(item: T): void {
@@ -10,7 +12,7 @@ export default class Shelf<T> {
   }
 
   find(title: string): T {
-    return this.find(item => item.title === title);
+    return this.items.find(item => item.title === title);
   }
 
   printTitles(): void {

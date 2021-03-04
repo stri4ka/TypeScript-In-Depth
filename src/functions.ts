@@ -122,9 +122,16 @@ export function printBook(book: Book): void {
 
 }
 
-export function getProperty(book: Book, prop: BookProperties): any {
+// export function getProperty(book: Book, prop: BookProperties): any {
+//   if (typeof book[prop] === 'function') {
+//     return (book[prop] as Function).name;
+//   }
+//   return book[prop];
+// }
+
+export function getProperty<TObject, TKey extends keyof TObject>(book: TObject, prop: TKey): TObject[TKey] | string {
   if (typeof book[prop] === 'function') {
-    return (book[prop] as Function).name;
+    return book[prop]['name']; // return prop;
   }
   return book[prop];
 }
