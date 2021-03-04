@@ -3,8 +3,10 @@
 import { ReferenceItem, RefBook, UniversityLibrarian, Shelf } from './classes';
 import { Book, Logger, Magazine } from './intefaces';
 import type { Library } from './classes';
-import { purge } from './functions';
+import { purge, getProperty, createCustomer } from './functions';
 import { Category } from './enums';
+import { BookRequiredFields, UpdatedBook, СreateCustomerFunctionType } from './types';
+import { UniversityLibrarian } from './classes/university-librarian';
 
 showHello('greeting', 'TypeScript');
 
@@ -182,13 +184,51 @@ const inventory: Book[] = [
 // const bookShelf = new Shelf<Book>();
 // inventory.forEach(book => bookShelf.add(book));
 // console.log(bookShelf.getFirst());
-// const magazines: Magazine[] = [
-//     { title: 'Programming Language Monthly', publisher: 'Code Mags' },
-//     { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
-//     { title: 'Five Points', publisher: 'GSU' },
-// ];
-// const magazineShelf = new Shelf<Magazine>();
-// magazines.forEach(mag => magazineShelf.add(mag));
+const magazines: Magazine[] = [
+    { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+    { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+    { title: 'Five Points', publisher: 'GSU' },
+];
+const magazineShelf = new Shelf<Magazine>();
+magazines.forEach(mag => magazineShelf.add(mag));
 // console.log(magazineShelf.getFirst());
 
 // Task 07.03
+// magazineShelf.printTitles();
+// console.log(magazineShelf.find('Five Points'));
+// console.log(getProperty(magazines[0], 'title'));
+
+// Task 07.04
+// const book: BookRequiredFields = {
+//     author: 'Anna',
+//     available: false,
+//     category: Category.CSS,
+//     id: 1,
+//     markDamaged: null,
+//     pages: 200,
+//     title: 'unknown'
+// }
+
+// const b: UpdatedBook = {
+//     id: 1,
+//     author: 'Boris'
+// }
+
+// const params: Parameters<СreateCustomerFunctionType> = ['Anna'];
+// createCustomer(...params);
+
+// Task 08.01, Task 08.02
+// const l = new UniversityLibrarian();
+// l.name = 'Anna';
+// console.log(l);
+// l['printLibrarian']()
+
+//  Task 08.03
+// const l = new UniversityLibrarian();
+// l.assistFaculty = null;
+// l.teachCommunity = null;
+// console.log(l);
+
+//  Task 08.04
+// const e = new RefBook(1, 'Unknown', 2021, 2);
+// e.printItem();
