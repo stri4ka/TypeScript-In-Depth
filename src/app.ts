@@ -3,10 +3,9 @@
 import { ReferenceItem, RefBook, UniversityLibrarian, Shelf } from './classes';
 import { Book, Logger, Magazine } from './intefaces';
 import type { Library } from './classes';
-import { purge, getProperty, createCustomer } from './functions';
+import { purge, getProperty, createCustomer, getBooksByCategory, logCategorySearch, getBooksByCategoryPromise, logSearchResults } from './functions';
 import { Category } from './enums';
 import { BookRequiredFields, UpdatedBook, СreateCustomerFunctionType } from './types';
-import { UniversityLibrarian } from './classes/university-librarian';
 
 showHello('greeting', 'TypeScript');
 
@@ -232,3 +231,38 @@ magazines.forEach(mag => magazineShelf.add(mag));
 //  Task 08.04
 // const e = new RefBook(1, 'Unknown', 2021, 2);
 // e.printItem();
+
+//  Task 08.05, 08.06
+// const l = new UniversityLibrarian();
+// l.name = 'Anna';
+// l.assistCustomer('Boris');
+// console.log(l);
+
+//  Task 08.07
+// const e = new RefBook(1, 'Unknown', 2021, 2);
+// e.copies = 10;
+// e.copies = 0;
+// e.copies = 1.1;
+
+// Task 09.01
+// console.log('Start');
+// getBooksByCategory(Category.JavaScript, logCategorySearch);
+// getBooksByCategory(Category.Software, logCategorySearch);
+// console.log('Finish');
+
+// Task 09.02
+// console.log('Start');
+// getBooksByCategoryPromise(Category.JavaScript)
+//     .then(titles => {console.log(titles); return titles.length;})
+//     .then(numOfBooks => console.log(numOfBooks))
+//     .catch(err => console.log(err));
+// getBooksByCategoryPromise(Category.Software)
+//     .then(titles => console.log(titles))
+//     .catch(err => console.log(err));
+// console.log('Finish');
+
+// Task 09.03
+console.log('Start');
+logSearchResults(Category.JavaScript);
+logSearchResults(Category.Software).catch(err => console.log(err));
+console.log('Finish');
